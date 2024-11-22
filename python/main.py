@@ -16,8 +16,14 @@ class Communicator:
     
     def reload_status(self):
         self.status = st.parse(wd.get_status())
-        qsend(str(self.status.dict))
         qsend('status', self.status.dict)
+    
+    def toggle_container(self):
+        self.reload_status() # just to make sure
+        out = wd.set_container(not self.status.container.state)
+        self.reload_status()
+        return out
+        #qsend('container_result', out)
     
     def send_notifications(self):
         notifs = notif.parse(wd.get_dumpsys('notification --noredact'))

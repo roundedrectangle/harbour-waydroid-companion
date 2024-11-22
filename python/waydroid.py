@@ -3,12 +3,13 @@ from typing import Optional
 import subprocess as sp
 #import codecs
 
-# Run some commands and return the output
+# Runs CLI commands and returns the output (mostly)
 
 def get_dumpsys(service: Optional[str]):
-    proc = sp.run(['waydroid', 'shell'], input=f'dumpsys {service}'.encode(), capture_output=True)
-    return proc.stdout.decode()
+    return sp.run(['waydroid', 'shell'], input=f'dumpsys {service}'.encode(), capture_output=True).stdout.decode()
 
 def get_status():
-    result = sp.run(['waydroid', 'status'], capture_output=True).stdout.decode()
-    return result
+    return sp.run(['waydroid', 'status'], capture_output=True).stdout.decode()
+
+def set_container(start: bool):
+    return sp.run(['waydroid', 'container', 'start' if start else 'stop'], capture_output=True).stdout.decode()

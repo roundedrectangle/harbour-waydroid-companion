@@ -13,13 +13,10 @@ ApplicationWindow {
 
     Python {
         id: py
-        /*property bool rooted: false
-        property bool containerRunning: false
-        property bool sessionStarted: false*/
-        property var status
+        property var status: ({'container':{},'session':{}})
 
         Component.onCompleted: {
-            setHandler("status", function(s) { status = s;console.log(JSON.stringify(status)) })
+            setHandler("status", function(s) { status = s })
             setHandler("notification", function(appName, title, summary, text) {
                 notification.appName = appName
                 notification.summary = title

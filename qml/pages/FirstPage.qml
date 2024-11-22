@@ -55,11 +55,20 @@ Page {
                 text: qsTr("Start container")
                 icon.source: "image://theme/icon-m-" + (py.status.container.state ? "play" : "pause")
                 description: py.status.container.state ? qsTr("Container is running") : qsTr("Container is stopped")
-                enabled: py.status.container.state
+                checked: py.status.container.state || false
+                automaticCheck: true
+                onCheckedChanged: {
+                    if (checked === py.status.container.state) return
+                    busy = true
+                    py.call('main.comm.toggle_container', [], function(res) {
+                        console.log("Succsessfully (or not xD) toggled contanier:", res, "<output ends here>")
+                        busy = false
+                    })
+                }
             }
 
             Label {
-                text: py.status.display
+                text: py.status.display || ""
             }
         }
     }

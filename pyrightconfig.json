@@ -34,6 +34,7 @@
 
 "reportUninitializedInstanceVariable": false,
 "reportUnannotatedClassAttribute": false,
+"reportUnusedCallResult": false,
 
 
 "pythonVersion": "3.8",
