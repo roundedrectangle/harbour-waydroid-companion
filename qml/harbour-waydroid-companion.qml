@@ -9,18 +9,17 @@ ApplicationWindow {
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: defaultAllowedOrientations
 
-    Notification {
-        id: notification
-
-
-    }
+    Notification { id: notification }
 
     Python {
         id: py
-        property bool rooted: false
+        /*property bool rooted: false
+        property bool containerRunning: false
+        property bool sessionStarted: false*/
+        property var status
 
         Component.onCompleted: {
-            setHandler("rooted", function(r){rooted = r})
+            setHandler("status", function(s) { status = s;console.log(JSON.stringify(status)) })
             setHandler("notification", function(appName, title, summary, text) {
                 notification.appName = appName
                 notification.summary = title

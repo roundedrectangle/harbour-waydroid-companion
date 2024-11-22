@@ -41,6 +41,26 @@ Page {
                 wrapMode: Text.Wrap
                 width: parent.width - Theme.horizontalPageMargin*2
             }
+
+            ButtonLayout {
+                Button {
+                    text: qsTr("Forward notifications")
+                    onClicked: py.call('main.comm.send_notifications')
+                }
+            }
+
+            SectionHeader { text: qsTr("Container") }
+
+            IconTextSwitch {
+                text: qsTr("Start container")
+                icon.source: "image://theme/icon-m-" + (py.status.container.state ? "play" : "pause")
+                description: py.status.container.state ? qsTr("Container is running") : qsTr("Container is stopped")
+                enabled: py.status.container.state
+            }
+
+            Label {
+                text: py.status.display
+            }
         }
     }
 }

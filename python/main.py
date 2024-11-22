@@ -1,33 +1,27 @@
-from typing import List, Optional
-import pyotherside as pyo
+import logging
+from typing import Union, Optional
+from pyotherside import send as qsend
 import os
-import subprocess as sp
-from waydroid import get_dumpsys
-from norifications import parse
-import models
 
-def full_text(text: Optional[str], extra_lines: Optional[List[str]]) -> Optional[str]:
-    lines = [] if text != None and text.strip() == '' else [text]
-    lines += [] if extra_lines == None else extra_lines
-    res = '\n\n'.join(lines)
-    return res if len(res) > 0 else None
+import waydroid as wd
+import notifications as notif
+import status as st
 
 class Communicator:
-    rooted: bool = False
-    def __init__(self) -> None:
-        self.check_root()
-        self.send_notifications()
-    
-    def check_root(self):
-        self.rooted = os.getuid() == 0
-        pyo.send('rooted', self.rooted)
+    status: st.Status
 
-    def send_notification(self, n: models.Notification):
-        pyo.send('notification', n.package or '', n.title or '', n.summary or '', full_text(n.text, n.textLines) or '')
+    def __init__(self) -> None:
+        logging.basicConfig(level=logging.WARNING)
+        self.reload_status()
+    
+    def reload_status(self):
+        self.status = st.parse(wd.get_status())
+        qsend(str(self.status.dict))
+        qsend('status', self.status.dict)
     
     def send_notifications(self):
-        notifs = parse(get_dumpsys())
+        notifs = notif.parse(wd.get_dumpsys('notification --noredact'))
         for n in notifs:
-            self.send_notification(n)
+            qsend('notification', n.package or '', n.title or '', n.summary or '', notif.full_text(n.text, n.textLines) or '')
 
 comm = Communicator()

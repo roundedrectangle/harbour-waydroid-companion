@@ -22,6 +22,26 @@
         <source>Settings are coming soon</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Forward notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Container</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start container</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Container is stopped</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Container is running</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SecondPage</name>

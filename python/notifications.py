@@ -1,6 +1,5 @@
 import re
 from models import *
-import pyotherside as pyo
 
 def find_extras(s):
     return re.findall(r'extras=\{([^{}]*(?:\{[^{}]*\}[^{}]*)*)\}', s, re.DOTALL)
@@ -68,3 +67,23 @@ def convert_types(d:dict):
 def todict(output: str):
     for e in find_extras(output):
         yield convert_types(extras_to_dict(e))
+
+
+
+# User should use this:
+
+def parse(output: str):
+    return [Notification.from_parsed(d) for d in todict(output)]
+
+def from_file(filename: str):
+    content = ''
+    with open(filename) as f:
+        content = f.read()
+    return parse(content)
+
+def full_text(text: Optional[str], extra_lines: Optional[List[str]]) -> Optional[str]:
+    # Convert text + extra lines to just text
+    lines = [] if text == None or text.strip() == '' else [text]
+    lines += [] if extra_lines == None else extra_lines
+    res = '\n\n'.join(lines)
+    return res if len(res) > 0 else None
