@@ -1,5 +1,7 @@
 # harbour-waydroid-companion
 
+**This app is discontinued and is no longer developed.**
+
 This app is a PoC, no publics builds will be built for now (at least by me).
 
 Currently fully supported features:
